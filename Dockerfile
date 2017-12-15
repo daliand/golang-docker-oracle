@@ -39,7 +39,6 @@ COPY *.go .
 # RUN go get github.com/mattn/go-oci8
 RUN go get gopkg.in/rana/ora.v4
 RUN go build -ldflags="-s -w" .
-RUN ls -l && pwd
 
 #
 # Create run image
@@ -53,7 +52,7 @@ RUN yum -y update
 WORKDIR /tmp
 COPY *.rpm ./
 RUN yum -y install install oracle-instantclient12.2-basiclite-12.2.0.1.0-1.x86_64.rpm
-RUN rm /tmp/*.rpm
+RUN rm /tmp/*.rpm && yum clean all
 ENV ORACLE_HOME=/usr/lib/oracle/12.2/client64
 ENV PATH=$PATH:$ORACLE_HOME/bin
 ENV LD_LIBRARY_PATH=$ORACLE_HOME/lib
